@@ -37,7 +37,7 @@ public class PickUp : MonoBehaviour {
 
 		//Check if item is in range and if pickup item button is pressed.
 		if ( !ItemPickedUp && ItemInRange && Input.GetKeyDown (KeyCode.R)) {
-			Debug.Log ("Picked up item");
+			//Debug.Log ("Picked up item");
 
 			//Set items position as player pickup item position
 			item.transform.position = this.gameObject.transform.position;
@@ -52,6 +52,9 @@ public class PickUp : MonoBehaviour {
 
 		}
 
+		if (ItemPickedUp) {
+			item.transform.position = new Vector3 (this.transform.position.x + 1f , this.transform.position.y, this.transform.position.z);
+		}
 
 		if (ItemPickedUp && Input.GetKeyDown (KeyCode.T)) {
 			
@@ -61,17 +64,21 @@ public class PickUp : MonoBehaviour {
 			item.GetComponent<BoxCollider> ().isTrigger = false;
 
 			item.GetComponent<Rigidbody> ().AddForce (Vector3.up * VerticalForceAmount);
-			item.GetComponent<Rigidbody> ().AddForce (Vector3.forward * HorizontalForceAmount);
+			item.GetComponent<Rigidbody> ().AddForce (Vector3.right * HorizontalForceAmount);
 			ItemPickedUp = false;
 		}
+
+
 	}
 
 
 	void OnTriggerEnter(Collider coll) {
 		if (coll.gameObject.tag == "ThrowableObject") {
 			Debug.Log ("Throwable item in range");
-			item = coll.gameObject;
-			ItemInRange = true;
+			if (!ItemPickedUp) {
+				item = coll.gameObject;
+				ItemInRange = true;
+			}
 		}
 	}
 
