@@ -54,6 +54,7 @@ public class PickUp : MonoBehaviour {
 
 		if (ItemPickedUp) {
 			item.transform.position = new Vector3 (this.transform.position.x + 1f , this.transform.position.y, this.transform.position.z);
+			item.transform.rotation = this.gameObject.transform.rotation;
 		}
 
 		if (ItemPickedUp && Input.GetKeyDown (KeyCode.T)) {
