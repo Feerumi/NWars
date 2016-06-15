@@ -53,7 +53,7 @@ public class PlayerControls : MonoBehaviour {
 			if (direction != Vector3.zero) {
 				//transform.rotation = Quaternion.LookRotation (direction);
 			}
-			Debug.Log (direction.magnitude);
+			//Debug.Log (direction.magnitude);
 			body.AddForce(direction);
 
 		}

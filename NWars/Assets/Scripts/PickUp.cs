@@ -27,9 +27,11 @@ public class PickUp : MonoBehaviour {
 	 */
 	GameObject item;
 
+	GameObject PickUpItemPosition;
+
 	// Use this for initialization
 	void Start () {
-	
+		PickUpItemPosition = GameObject.FindGameObjectWithTag ("PickupItemPosition");
 	}
 
 	// Update is called once per frame
@@ -53,8 +55,10 @@ public class PickUp : MonoBehaviour {
 		}
 
 		if (ItemPickedUp) {
-			item.transform.position = new Vector3 (this.transform.position.x + 1f , this.transform.position.y, this.transform.position.z);
-			item.transform.rotation = this.gameObject.transform.rotation;
+			item.transform.position = new Vector3 (PickUpItemPosition.transform.position.x
+				, PickUpItemPosition.transform.position.y
+				, PickUpItemPosition.transform.position.z);
+			//item.transform.rotation = PickUpItemPosition.transform.rotation;
 		}
 
 		if (ItemPickedUp && Input.GetKeyDown (KeyCode.T)) {
@@ -63,13 +67,19 @@ public class PickUp : MonoBehaviour {
 			item.GetComponent<Rigidbody> ().isKinematic = false;
 			item.GetComponent<Rigidbody> ().useGravity = true;
 			item.GetComponent<BoxCollider> ().isTrigger = false;
+			StartCoroutine ("Delay");
 
-			item.GetComponent<Rigidbody> ().AddForce (Vector3.up * VerticalForceAmount);
-			item.GetComponent<Rigidbody> ().AddForce (Vector3.right * HorizontalForceAmount);
+			item.GetComponent<Rigidbody> ().AddForce (PickUpItemPosition.transform.forward * VerticalForceAmount);
+			item.GetComponent<Rigidbody> ().AddForce (PickUpItemPosition.transform.up * HorizontalForceAmount);
 			ItemPickedUp = false;
 		}
 
 
+	}
+
+	IEnumerator Delay() {
+		yield return new WaitForSeconds(0.25f);
+		item.GetComponent<ThrowableKnockBack> ().isActive = true;
 	}
 
 
