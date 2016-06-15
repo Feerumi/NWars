@@ -34,7 +34,7 @@ public class PlayerControls : MonoBehaviour {
 
 	/**
 	 * Maximum force the player can apply to the player object
-	 * during a single update pass. Effetively controls how quickly
+	 * during a single update pass. Effectively controls how quickly
 	 * player reaches max speed.
 	 */
 	public float maxForce;
@@ -102,8 +102,6 @@ public class PlayerControls : MonoBehaviour {
 				// TODO Rotate player avatar
 				//transform.rotation = Quaternion.LookRotation (direction);
 			}
-				
-
 		}
 
 		if (dashTimerInSeconds > 0) {
