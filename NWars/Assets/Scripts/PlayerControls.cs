@@ -15,6 +15,7 @@ public class PlayerControls : MonoBehaviour {
 	private bool dashing;
 	private float dashSpeed;
 	private float dashTimerInSeconds;
+	private Rigidbody body;
 
 	void Start () {
 		controller = GetComponent<CharacterController> ();
@@ -22,9 +23,10 @@ public class PlayerControls : MonoBehaviour {
 		dashing = false;
 		dashSpeed = movementSpeed * dashMultiplier;
 		dashTimerInSeconds = 0f;
+		body = GetComponent<Rigidbody> ();
 	}
 
-	void Update () {
+	void FixedUpdate () {
 
 		if (Input.GetButtonDown("Fire1") && !dashing) {
 			dashing = true;
@@ -40,7 +42,7 @@ public class PlayerControls : MonoBehaviour {
 
 		if (isMoving) {
 
-			direction = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical"));
+			direction = new Vector3 (horizontal, 0, vertical);
 
 			if (dashing) {
 				direction *= dashSpeed;
@@ -49,10 +51,10 @@ public class PlayerControls : MonoBehaviour {
 			}
 
 			if (direction != Vector3.zero) {
-				transform.rotation = Quaternion.LookRotation (direction);
+				//transform.rotation = Quaternion.LookRotation (direction);
 			}
-
-			controller.Move (direction * Time.deltaTime);
+			Debug.Log (direction.magnitude);
+			body.AddForce(direction);
 
 		}
 
