@@ -71,6 +71,7 @@ public class PickUp : MonoBehaviour {
 
 			item.GetComponent<Rigidbody> ().AddForce (PickUpItemPosition.transform.forward * VerticalForceAmount);
 			item.GetComponent<Rigidbody> ().AddForce (PickUpItemPosition.transform.up * HorizontalForceAmount);
+			item.GetComponent<Rigidbody> ().AddTorque (new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)));
 			ItemPickedUp = false;
 		}
 

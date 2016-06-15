@@ -68,6 +68,12 @@ public class PlayerControls : MonoBehaviour {
 			horizontalSpeed.x = body.velocity.x;
 			horizontalSpeed.z = body.velocity.z;
 
+			// Rotate player to the direction of player input 
+			transform.rotation = Quaternion.Lerp(transform.rotation, 
+				Quaternion.LookRotation(new Vector3(horizontal, 0, vertical)), 
+				turningSpeed);
+
+
 
 			if (dashing) {
 
@@ -96,11 +102,6 @@ public class PlayerControls : MonoBehaviour {
 
 				direction *= movementSpeed;
 				body.AddForce (Vector3.ClampMagnitude (direction, maxForce));
-			}
-
-			if (direction != Vector3.zero) {
-				// TODO Rotate player avatar
-				//transform.rotation = Quaternion.LookRotation (direction);
 			}
 		}
 
