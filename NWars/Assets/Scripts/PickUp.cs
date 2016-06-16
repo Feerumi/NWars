@@ -2,6 +2,10 @@
 using System.Collections;
 
 public class PickUp : MonoBehaviour {
+
+
+	public GameObject PickUpItemPosition;
+
 	/**
 	 * Used for checking if item is in players pickup range.
 	 */
@@ -27,11 +31,11 @@ public class PickUp : MonoBehaviour {
 	 */
 	GameObject item;
 
-	GameObject PickUpItemPosition;
+	float destroyTime = 2.5f;
 
 	// Use this for initialization
 	void Start () {
-		PickUpItemPosition = GameObject.FindGameObjectWithTag ("PickupItemPosition");
+
 	}
 
 	// Update is called once per frame
@@ -81,9 +85,9 @@ public class PickUp : MonoBehaviour {
 	IEnumerator Delay() {
 		yield return new WaitForSeconds(0.25f);
 		item.GetComponent<ThrowableKnockBack> ().isActive = true;
+		Destroy (item, destroyTime);
 	}
-
-
+		
 	void OnTriggerEnter(Collider coll) {
 		if (coll.gameObject.tag == "ThrowableObject") {
 			Debug.Log ("Throwable item in range");
