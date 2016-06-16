@@ -85,7 +85,6 @@ public class PickUp : MonoBehaviour {
 	IEnumerator Delay() {
 		yield return new WaitForSeconds(0.25f);
 		item.GetComponent<ThrowableKnockBack> ().isActive = true;
-		Destroy (item, destroyTime);
 	}
 		
 	void OnTriggerEnter(Collider coll) {

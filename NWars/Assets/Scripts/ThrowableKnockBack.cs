@@ -14,12 +14,16 @@ public class ThrowableKnockBack : MonoBehaviour {
 		return isActive;
 	}
 
+	public void setPassive(){
+		isActive = false;
+	}
+
 	public float getMass(){
 		return rigidBody.mass;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 }

@@ -17,19 +17,25 @@ public class KnockBack : MonoBehaviour {
 
 	void OnCollisionEnter(Collision other){
 
-		if (other.gameObject.tag.Equals ("ThrowableObject")) {
-			explosionForce += 10;
+		ThrowableKnockBack values = other.gameObject.GetComponent<ThrowableKnockBack> ();
+
+		if (other.gameObject.tag.Equals ("ThrowableObject") && values.getActive()) {
+
+			Debug.Log ("Impulse" + other.impulse);
+			explosionForce += other.impulse.magnitude;
+			explosionForce = (Mathf.Round (explosionForce));
+
 			if (this.gameObject.name.Equals ("Player1")) {
 				Debug.Log ("Player1" + explosionForce);
-				playerOneText.text = explosionForce;
+				playerOneText.text = explosionForce.ToString();
 			} else if (this.gameObject.name.Equals("Player2")) {
 				Debug.Log ("Player2" + explosionForce);
-				playerTwoText.text = explosionForce;
+				playerTwoText.text = explosionForce.ToString();
 			}
 
-			ThrowableKnockBack values = other.gameObject.GetComponent<ThrowableKnockBack> ();
 			if (values.getActive()) {
-				rigidBody.AddExplosionForce (explosionForce * values.getMass(), other.transform.position, explosionRadius);	
+				rigidBody.AddExplosionForce (explosionForce * values.getMass(), other.transform.position, explosionRadius);
+				values.setPassive ();
 			}
 		}
 	}
