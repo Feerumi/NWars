@@ -31,7 +31,8 @@ public class PickUp : MonoBehaviour {
 	 */
 	GameObject item;
 
-	float destroyTime = 2.5f;
+	public string pickUpKey;
+	public string throwKey;
 
 	// Use this for initialization
 	void Start () {
@@ -42,7 +43,7 @@ public class PickUp : MonoBehaviour {
 	void Update () {
 
 		//Check if item is in range and if pickup item button is pressed.
-		if ( !ItemPickedUp && ItemInRange && Input.GetKeyDown (KeyCode.R)) {
+		if ( !ItemPickedUp && ItemInRange && Input.GetButtonDown (pickUpKey)) {
 			//Debug.Log ("Picked up item");
 
 			//Set items position as player pickup item position
@@ -65,7 +66,7 @@ public class PickUp : MonoBehaviour {
 			item.transform.rotation = PickUpItemPosition.transform.rotation;
 		}
 
-		if (ItemPickedUp && Input.GetKeyDown (KeyCode.T)) {
+		if (ItemPickedUp && Input.GetButtonDown (throwKey)) {
 			
 			//Make item non kinematic and make it be affected by gravity.
 			item.GetComponent<Rigidbody> ().isKinematic = false;

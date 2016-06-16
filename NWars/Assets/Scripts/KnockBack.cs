@@ -5,14 +5,17 @@ using UnityEngine.UI;
 public class KnockBack : MonoBehaviour {
 
 	Rigidbody rigidBody;
-	float explosionForce = 0;
+	float explosionForce = 200;
 	public float explosionRadius;
 	public Text playerOneText;
 	public Text playerTwoText;
+	float p1multiplier;
+	float p2multiplier;
 	// Use this for initialization
 	void Start () {
 		rigidBody = GetComponent<Rigidbody> ();
-
+		p1multiplier = 0;
+		p2multiplier = 0;
 	}
 
 	void OnCollisionEnter(Collision other){
@@ -21,22 +24,18 @@ public class KnockBack : MonoBehaviour {
 
 		if (other.gameObject.tag.Equals ("ThrowableObject") && values.getActive()) {
 
-			Debug.Log ("Impulse" + other.impulse);
-			explosionForce += other.impulse.magnitude;
-			explosionForce = (Mathf.Round (explosionForce));
-
 			if (this.gameObject.name.Equals ("Player1")) {
 				Debug.Log ("Player1" + explosionForce);
-				playerOneText.text = explosionForce.ToString();
+				p1multiplier += other.impulse.magnitude * 10;
+				playerOneText.text = Mathf.Round(p1multiplier).ToString() + "%";
+				rigidBody.AddExplosionForce (explosionForce * values.getMass() * (1 + p1multiplier / 100), other.transform.position, explosionRadius);
 			} else if (this.gameObject.name.Equals("Player2")) {
 				Debug.Log ("Player2" + explosionForce);
-				playerTwoText.text = explosionForce.ToString();
+				p2multiplier += other.impulse.magnitude * 10;
+				playerTwoText.text = Mathf.Round(p2multiplier).ToString() + "%";
+				rigidBody.AddExplosionForce (explosionForce * values.getMass() * (1 + p2multiplier / 100), other.transform.position, explosionRadius);
 			}
-
-			if (values.getActive()) {
-				rigidBody.AddExplosionForce (explosionForce * values.getMass(), other.transform.position, explosionRadius);
-				values.setPassive ();
-			}
+			values.setPassive ();
 		}
 	}
 }

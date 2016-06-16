@@ -16,6 +16,7 @@ public class ThrowableKnockBack : MonoBehaviour {
 
 	public void setPassive(){
 		isActive = false;
+		Destroy (this.gameObject, 2.0f);
 	}
 
 	public float getMass(){
