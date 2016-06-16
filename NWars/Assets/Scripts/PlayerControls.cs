@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerControls : MonoBehaviour {
+public class PlayerControls : MonoBehaviour, Killable {
 
 
 	public float movementSpeed;
@@ -112,5 +112,10 @@ public class PlayerControls : MonoBehaviour {
 			dashing = false;
 		}
 
+	}
+
+	public void onDeath() {
+		// TODO Reset position to orginal position.
+		Destroy (this.gameObject);
 	}
 }

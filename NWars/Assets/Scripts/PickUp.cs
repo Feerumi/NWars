@@ -58,7 +58,7 @@ public class PickUp : MonoBehaviour {
 			item.transform.position = new Vector3 (PickUpItemPosition.transform.position.x
 				, PickUpItemPosition.transform.position.y
 				, PickUpItemPosition.transform.position.z);
-			//item.transform.rotation = PickUpItemPosition.transform.rotation;
+			item.transform.rotation = PickUpItemPosition.transform.rotation;
 		}
 
 		if (ItemPickedUp && Input.GetKeyDown (KeyCode.T)) {
