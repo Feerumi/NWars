@@ -9,12 +9,16 @@ public class PlayerControls : MonoBehaviour, Killable {
 	public float dashMultiplier;
 	public float dashDuration;
 	private Vector3 direction = Vector3.zero;
-	private CharacterController controller;
 
+	public bool isPlayerTwo;
 	private bool dashing;
 	private float dashSpeed;
 	private float dashTimerInSeconds;
 	private Rigidbody body;
+
+	private string horizontalString;
+	private string verticalString;
+	public string dashString;
 
 	/**
 	 * Used to calculate the players movement speed alongthe X and Z axis, as
@@ -45,7 +49,7 @@ public class PlayerControls : MonoBehaviour, Killable {
 	public float maxForceDash;
 
 	void Start () {
-		controller = GetComponent<CharacterController> ();
+		setPlayerControls ();
 		dashing = false;
 		dashSpeed = movementSpeed * dashMultiplier;
 		dashTimerInSeconds = 0f;
@@ -53,15 +57,26 @@ public class PlayerControls : MonoBehaviour, Killable {
 		horizontalSpeed = new Vector3 (0, 0, 0);
 	}
 
-	void FixedUpdate () {
+	void setPlayerControls(){
 
-		if (Input.GetButtonDown("Fire1") && !dashing) {
+		if (isPlayerTwo) {
+			horizontalString = "Horizontal2";
+			verticalString = "Vertical2";
+		} else {
+			horizontalString = "Horizontal";
+			verticalString = "Vertical";
+		}
+
+	}
+
+	void FixedUpdate () {
+		if (Input.GetButtonDown(dashString) && !dashing) {
 			dashing = true;
 			dashTimerInSeconds = dashDuration;
 		}
 
-		float horizontal = Input.GetAxisRaw ("Horizontal");
-		float vertical = Input.GetAxisRaw ("Vertical");
+		float horizontal = Input.GetAxisRaw (horizontalString);
+		float vertical = Input.GetAxisRaw (verticalString);
 
 		if (horizontal != 0 || vertical != 0) {
 
