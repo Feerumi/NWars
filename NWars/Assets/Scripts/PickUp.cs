@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PickUp : MonoBehaviour {
 
@@ -38,7 +39,7 @@ public class PickUp : MonoBehaviour {
 	/**
      * Percent at which charge begins.
 	 */
-	public float minCharge;
+	public float baseCharge;
 
 	/**
 	 * Time in seconds it takes to fully charge the throw.
@@ -55,9 +56,10 @@ public class PickUp : MonoBehaviour {
 	 */
 	private bool charging = false;
 
+	public Image chargeBar;
+
 	// Use this for initialization
 	void Start () {
-		
 	}
 
 	// Update is called once per frame
@@ -95,11 +97,20 @@ public class PickUp : MonoBehaviour {
 				item.GetComponent<Rigidbody> ().AddForce (PickUpItemPosition.transform.up * HorizontalForceAmount * throwCharge);
 				item.GetComponent<Rigidbody> ().AddTorque (new Vector3 (Random.Range (-10, 10), Random.Range (-10, 10), Random.Range (-10, 10)));
 				ItemPickedUp = false;
-				throwCharge = minCharge;
+				throwCharge = baseCharge;
 				charging = false;
+				chargeBar.fillAmount = 0;
 			// Otherwise charge the throw.
 			} else if (Input.GetButton(pickUpKey)) {
-				throwCharge = Mathf.Clamp(throwCharge + (Time.deltaTime / rechargeRate * minCharge), minCharge, maxThrowCharge);
+
+				// If no charge rate is applied, charge instantly.
+				if (rechargeRate != 0) {
+					throwCharge = Mathf.Clamp (throwCharge + (Time.deltaTime / rechargeRate), baseCharge, maxThrowCharge);
+					chargeBar.fillAmount = (throwCharge - baseCharge) / (maxThrowCharge - baseCharge);
+				} else {
+					throwCharge = maxThrowCharge;
+					chargeBar.fillAmount = 1;
+				}
 			}
 		}
 			
