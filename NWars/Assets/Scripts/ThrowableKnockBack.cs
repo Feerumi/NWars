@@ -2,12 +2,16 @@
 using System.Collections;
 
 public class ThrowableKnockBack : MonoBehaviour {
-
+	
 	public bool isActive;
+	public float killTime;
+	bool destroyCalled;
 	Rigidbody rigidBody;
+
 	// Use this for initialization
 	void Start () {
 		rigidBody = GetComponent<Rigidbody> ();
+		destroyCalled = false;
 	}
 
 	public bool getActive(){
@@ -16,7 +20,9 @@ public class ThrowableKnockBack : MonoBehaviour {
 
 	public void setPassive(){
 		isActive = false;
-		Destroy (this.gameObject, 2.0f);
+		if (!destroyCalled) {
+			Destroy (this.gameObject, killTime);
+		}
 	}
 
 	public float getMass(){
@@ -26,5 +32,11 @@ public class ThrowableKnockBack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void onDeath(){
+		if (!destroyCalled) {
+			Destroy (this.gameObject, killTime);
+		}
 	}
 }
