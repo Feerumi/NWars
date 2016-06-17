@@ -18,6 +18,18 @@ public class KnockBack : MonoBehaviour {
 		p2multiplier = 0;
 	}
 
+	public void nullPercentage(bool isPlayerTwo){
+
+		if (isPlayerTwo) {
+			p2multiplier = 0;
+			playerTwoText.text = p2multiplier + "%";
+		} else {
+			p1multiplier = 0;
+			playerOneText.text = p1multiplier + "%";
+		}
+
+	}
+
 	void OnCollisionEnter(Collision other){
 
 		ThrowableKnockBack values = other.gameObject.GetComponent<ThrowableKnockBack> ();

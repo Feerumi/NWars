@@ -9,6 +9,8 @@ public class PlayerControls : MonoBehaviour, Killable {
 	public float dashMultiplier;
 	public float dashDuration;
 	private Vector3 direction = Vector3.zero;
+	private Vector3 startPos;
+	private Quaternion startRot;
 
 	public bool isPlayerTwo;
 	private bool dashing;
@@ -49,6 +51,8 @@ public class PlayerControls : MonoBehaviour, Killable {
 	public float maxForceDash;
 
 	void Start () {
+		startPos = gameObject.transform.position;
+		startRot = gameObject.transform.rotation;
 		setPlayerControls ();
 		dashing = false;
 		dashSpeed = movementSpeed * dashMultiplier;
@@ -130,7 +134,11 @@ public class PlayerControls : MonoBehaviour, Killable {
 	}
 
 	public void onDeath() {
-		// TODO Reset position to orginal position.
-		Destroy (this.gameObject);
+
+		gameObject.transform.position = startPos;
+		gameObject.transform.rotation = startRot;
+		GetComponent<Rigidbody> ().velocity = Vector3.zero;
+		GetComponent<KnockBack> ().nullPercentage (isPlayerTwo);
+
 	}
 }

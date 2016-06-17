@@ -28,7 +28,20 @@ public class ThrowableKnockBack : MonoBehaviour {
 	public float getMass(){
 		return rigidBody.mass;
 	}
-	
+
+	void OnCollisionEnter(Collision other){
+
+		if (other.gameObject.tag.Equals ("Platform")) {
+
+			if (isActive) {
+				isActive = false;
+				setPassive ();
+			}
+
+		}
+
+	}
+
 	// Update is called once per frame
 	void Update () {
 		
